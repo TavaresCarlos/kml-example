@@ -1,0 +1,41 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+   integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+   crossorigin=""/>
+    
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+   integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+   crossorigin=""></script>
+</head>
+<body>
+    <div id="map" style="width: 700px; height: 500px"></div>
+    
+    <!-- include this from here: https://raw.githubusercontent.com/mapbox/tokml/master/tokml.js -->
+    <script src="tokml.js"></script>
+
+    <script>
+        // set up a basic map and add a marker
+        var map = L.map('map').setView([-20.760207082076743, -42.86963939666748], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var marker = L.marker([-20.760207082076743, -42.86963939666748]).addTo(map);
+        var polyline = L.polyline([[-20.757839456065028,-42.89105415344238],[-20.758702239330074,-42.890024185180664]]).addTo(map);
+        var polygon = L.polygon([[-20.760207082076743, -42.86963939666748],[-20.758160492273795,-42.87676334381103],[-20.760166953131275,-42.87436008453369],[-20.760207082076743, -42.86963939666748]]).addTo(map)
+        
+        //convert marker to geojson
+        //layers also have a toGeoJSON function
+        // then export to kml
+        var xml_01 = tokml(marker.toGeoJSON());
+        var xml_02 = tokml(polyline.toGeoJSON());
+        var xml_03 = tokml(polygon.toGeoJSON());
+        
+        alert(xml_01);
+        alert(xml_02);
+        alert(xml_03);
+        
+    </script>
+</body>
+</html>
